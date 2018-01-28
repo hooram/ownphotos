@@ -1,4 +1,4 @@
-from api.models import Photo, Person, Face
+from api.models import Photo, Person, Face, get_unknown_person
 from config import image_dirs, NEXTCLOUD_USER, NEXTCLOUD_PWD, NEXTCLOUD_CONTACT_ENDPOINT, assume_face_is_person, fetch_external_person
 from requests.auth import HTTPBasicAuth
 from lxml import etree
@@ -34,6 +34,9 @@ def fetch_external_people():
 class PersonFetcher(object):
 
     def fetch_persons(self):
+        """
+        Should be overriden by every fetching strategy
+        """
         raise NotImplementError
 
     def handle_person(self, person_name, person_external_id, photo_path=None):
@@ -55,7 +58,8 @@ class PersonFetcher(object):
             # If it's a newly added photo then assign faces to the person
             # provided that the corresponding flag is activated
             if photo and is_added and not is_already_stored and assume_face_is_person:
-                unknown_person = photo.get_or_create_unknown_person()
+                unknown_person = get_unknown_person()[0]
+                for face in Face.objects.filter(photo=photo):
                     if face.person == unknown_person:
                         face.person = person
                         face.person_label_is_inferred = False

@@ -216,20 +216,8 @@ class Photo(models.Model):
                 pass
                 # self.geolocation_json = {}
 
-
-
-    def get_or_create_unknown_person(self):
-        qs_unknown_person = Person.objects.filter(name='unknown')
-        unknown_person = None
-        if qs_unknown_person.count() == 0:
-            unknown_person = Person(name='unknown')
-            unknown_person.save()
-        else:
-            unknown_person = qs_unknown_person[0]
-        return unknown_person
-
     def _extract_faces(self):
-        unknown_person = self.get_or_create_unknown_person()
+        unknown_person = get_unknown_person()[0]
 
         thumbnail = PIL.Image.open(self.thumbnail)
         thumbnail = np.array(thumbnail.convert('RGB'))
@@ -281,6 +269,9 @@ class Person(models.Model):
     kind = models.CharField(choices=KIND_CHOICES,max_length=10)
     mean_face_encoding = models.TextField()
     cluster_id = models.IntegerField(null=True)
+    # It allows to map an ownphoto Person to a person from a remote server.
+    # This way we know which Person was fetched from a remote server and
+    # we can update its name/picture accordingly over time.
     external_id = models.CharField(null=True, max_length=128)
 
     def __str__(self):
@@ -296,8 +287,6 @@ class Person(models.Model):
         mean_encoding = np.array(encodings).mean(axis=0)
         self.mean_face_encoding = base64.encodebytes(mean_encoding.tostring())
         # ipdb.set_trace()
-
-
 
 def get_unknown_person():
     return Person.objects.get_or_create(name='unknown',kind="UNKNOWN")
