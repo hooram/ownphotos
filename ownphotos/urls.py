@@ -47,13 +47,14 @@ urlpatterns = [
     url(r'^api/clusterfaces', views.ClusterFaceView.as_view()),
     url(r'^api/socialgraph', views.SocialGraphView.as_view()),
     url(r'^api/scanphotos', views.ScanPhotosView.as_view()),
+    url(r'^api/fetch-external-people', views.FetchExternalPeopleView.as_view()),
     url(r'^api/autoalbumgen', views.AutoAlbumGenerateView.as_view()),
 
     url(r'^api/stats', views.StatsView.as_view()),
     url(r'^api/locclust', views.LocationClustersView.as_view()),
-    url(r'^api/photocountrycounts', views.PhotoCountryCountsView.as_view()),    
-    url(r'^api/photomonthcounts', views.PhotoMonthCountsView.as_view()),    
-    url(r'^api/wordcloud', views.SearchTermWordCloudView.as_view()),    
+    url(r'^api/photocountrycounts', views.PhotoCountryCountsView.as_view()),
+    url(r'^api/photomonthcounts', views.PhotoMonthCountsView.as_view()),
+    url(r'^api/wordcloud', views.SearchTermWordCloudView.as_view()),
 
     url(r'^api/watcher/photo', views.IsPhotosBeingAddedView.as_view()),
     url(r'^api/watcher/autoalbum', views.IsAutoAlbumsBeingProcessed.as_view()),
@@ -61,4 +62,3 @@ urlpatterns = [
     url(r'^api/token-refresh/', refresh_jwt_token),
     url(r'^api/token-verify/', verify_jwt_token),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-

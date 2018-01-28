@@ -23,6 +23,7 @@ ipdb==0.10.3
 ipython-genutils==0.2.0
 ipython==6.1.0
 jedi==0.10.2
+lxml==4.1.1
 matplotlib==2.0.2
 networkx==1.11
 nltk==3.2.4
@@ -48,6 +49,7 @@ six==1.10.0
 tornado==4.5.1
 tqdm==4.14.0
 traitlets==4.3.2
+vobject==0.9.5
 urllib3==1.21.1
 wcwidth==0.1.7
 yarg==0.1.9

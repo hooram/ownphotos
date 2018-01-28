@@ -31,6 +31,7 @@ from api.api_util import \
     get_searchterms_wordcloud
 
 from api.directory_watcher import is_photos_being_added, scan_photos
+from api.background_tasks import fetch_external_people
 from api.autoalbum import is_auto_albums_being_processed
 
 from rest_framework.pagination import PageNumberPagination
@@ -152,7 +153,7 @@ class PersonViewSet(viewsets.ModelViewSet):
     queryset = Person.objects.all().order_by('name')
     serializer_class = PersonSerializer
     pagination_class = StandardResultsSetPagination
-    
+
     @cache_response(CACHE_TTL,key_func=CustomObjectKeyConstructor())
     def retrieve(self, *args, **kwargs):
         return super(PersonViewSet, self).retrieve(*args, **kwargs)
@@ -344,6 +345,11 @@ class SearchTermWordCloudView(APIView):
 class ScanPhotosView(APIView):
     def get(self, requests, format=None):
         res = scan_photos()
+        return Response(res)
+
+class FetchExternalPeopleView(APIView):
+    def get(self, requests, format=None):
+        res = fetch_external_people()
         return Response(res)
 
 

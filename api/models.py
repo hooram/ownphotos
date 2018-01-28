@@ -50,7 +50,7 @@ class Photo(models.Model):
     thumbnail = models.ImageField(upload_to='thumbnails')
     square_thumbnail = models.ImageField(upload_to='square_thumbnails')
     image = models.ImageField(upload_to='photos')
-    
+
     added_on = models.DateTimeField(null=False,blank=False,db_index=True)
 
     exif_gps_lat = models.FloatField(blank=True, null=True)
@@ -232,7 +232,7 @@ class Photo(models.Model):
 
         face_encodings = face_recognition.face_encodings(thumbnail)
         face_locations = face_recognition.face_locations(thumbnail)
-    
+
         faces = []
         if len(face_locations) > 0:
             for idx_face, face in enumerate(zip(face_encodings,face_locations)):
@@ -277,6 +277,7 @@ class Person(models.Model):
     kind = models.CharField(choices=KIND_CHOICES,max_length=10)
     mean_face_encoding = models.TextField()
     cluster_id = models.IntegerField(null=True)
+    external_id = models.CharField(null=True, max_length=128)
 
     def __str__(self):
         return "%d"%self.id
@@ -291,7 +292,7 @@ class Person(models.Model):
         mean_encoding = np.array(encodings).mean(axis=0)
         self.mean_face_encoding = base64.encodebytes(mean_encoding.tostring())
         # ipdb.set_trace()
-        
+
 
 
 def get_unknown_person():
@@ -301,7 +302,7 @@ class Face(models.Model):
     photo = models.ForeignKey(Photo, related_name='faces', blank=False, null=False)
     image = models.ImageField(upload_to='faces')
     image_path = models.FilePathField()
-    
+
     person = models.ForeignKey(Person, on_delete=models.SET(get_unknown_person), related_name='faces')
     person_label_is_inferred = models.NullBooleanField(db_index=True)
 
