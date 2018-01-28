@@ -35,7 +35,7 @@ def scan_photos():
     already_existing_photo = 0
     for image_path in tqdm(image_paths):
         if image_path.lower().endswith('.jpg'):
-            is_added, is_already_existing = process_photo(image_path)
+            is_added, is_already_existing, _ = process_photo(image_path)
             if is_added:
                 added_photo_count += 1
             if is_already_existing:
