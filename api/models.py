@@ -218,14 +218,18 @@ class Photo(models.Model):
 
 
 
-
-    def _extract_faces(self):
+    def get_or_create_unknown_person(self):
         qs_unknown_person = Person.objects.filter(name='unknown')
+        unknown_person = None
         if qs_unknown_person.count() == 0:
             unknown_person = Person(name='unknown')
             unknown_person.save()
         else:
             unknown_person = qs_unknown_person[0]
+        return unknown_person
+
+    def _extract_faces(self):
+        unknown_person = self.get_or_create_unknown_person()
 
         thumbnail = PIL.Image.open(self.thumbnail)
         thumbnail = np.array(thumbnail.convert('RGB'))
