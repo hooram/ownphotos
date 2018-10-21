@@ -50,7 +50,7 @@ Jinja2==2.10
 MarkupSafe==1.0
 matplotlib==2.0.2
 mkl-fft==1.0.6
-mkl-random==1.0.1
+mkl-random==1.0.1.1
 msgpack==0.5.6
 msgpack-numpy==0.4.3.2
 murmurhash==1.0.1

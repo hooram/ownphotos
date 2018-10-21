@@ -6,24 +6,26 @@ ENV MAPBOX_API_KEY mapbox-XXXX
 ENV ALLOWED_HOSTS=*
 
 RUN apt-get update && \
+    env DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata && \
     apt-get install -y \
     libsm6 \
     libboost-all-dev \
     libglib2.0-0 \
     libxrender-dev \ 
     python3-tk \
+    libffi-dev \
+    libssl-dev \
     python3 \
     python3-pip \
+    python3-venv \
     wget \
     curl \
     nginx 
 
-# RUN apt-get install libopenblas-dev liblapack-dev
-
-RUN pip3 install virtualenv
+RUN apt-get install -y libopenblas-dev liblapack-dev
 
 # Create venv
-RUN virtualenv /venv
+RUN python3 -m venv /venv && /venv/bin/pip install wheel
 
 # Build and install dlib
 RUN apt-get update && \
@@ -38,15 +40,19 @@ RUN apt-get update && \
 
 RUN /venv/bin/pip install cython
 
+RUN /venv/bin/pip install https://download.pytorch.org/whl/cpu/torch-0.4.1-cp35-cp35m-linux_x86_64.whl && /venv/bin/pip install torchvision
+
 RUN mkdir /code
 WORKDIR /code
 COPY requirements.txt /code/
 
-RUN /venv/bin/pip install http://download.pytorch.org/whl/cpu/torch-0.4.0-cp35-cp35m-linux_x86_64.whl && /venv/bin/pip install torchvision
+RUN /venv/bin/pip install spacy==2.0.16 && /venv/bin/python -m spacy download en_core_web_sm
+
+# Work around broken pyocclient setup.py
+# This commit is 5 commits after v0.4 and fixes the UnicodeDecodeError during installation
+RUN /venv/bin/pip install https://github.com/owncloud/pyocclient/archive/78984391ded8b72dd0742c67968310a469b15063.zip 
 
 RUN /venv/bin/pip install -r requirements.txt
-
-RUN /venv/bin/python -m spacy download en_core_web_sm
 
 WORKDIR /code/api/places365
 RUN wget https://s3.eu-central-1.amazonaws.com/ownphotos-deploy/places365_model.tar.gz
@@ -62,9 +68,7 @@ RUN tar xf im2txt_data.tar.gz
 WORKDIR /
 RUN curl -sL https://deb.nodesource.com/setup_8.x -o nodesource_setup.sh 
 RUN bash nodesource_setup.sh
-RUN apt-get install nodejs
-
-RUN rm -rf /var/lib/apt/lists/*
+RUN apt-get install -y nodejs
 
 WORKDIR /code
 RUN git clone https://github.com/hooram/ownphotos-frontend.git
@@ -75,6 +79,8 @@ RUN npm install
 RUN npm install -g serve
 
 RUN apt-get remove --purge -y cmake git && \
+    apt-get autoremove -y && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 VOLUME /data
@@ -112,7 +118,6 @@ EXPOSE 3000
 EXPOSE 5000
 
 COPY . /code
-
 
 RUN mv /code/config_docker.py /code/config.py
 
