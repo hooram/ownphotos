@@ -1,18 +1,44 @@
 version: '2'
 
 services:
-  frontend:
-    image: ownphotos-frontend
-    ports:
-      - 3000
+  ownphotos:
+    image: ownphotos
     build: .
 
-  backend:
-    image: ownphotos-backend
+    ports:
+      - 8000:80
+      - 8001:5000
+
     volumes:
       - $HOME/Pictures/:/data
-    ports:
-      - 8000
+
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      DB_HOST: database
+      DB_BACKEND: postgresql
+      DB_NAME: ownphotos
+      DB_USER: ownphotos
+      DB_PASS: ownphotos
+      DB_PORT: 5432
+
+      SECRET_KEY: CHANGE_ME
+      ADMIN_EMAIL: CHANGE_ME
+      ADMIN_USERNAME: CHANGE_ME
+      ADMIN_PASSWORD: CHANGE_ME
+      DEBUG: "false"
+      MAPBOX_API_KEY: CHANGE_ME
+      BACKEND_HOST: CHANGE_ME
+
+    depends_on:
+      - database
+      - redis
+
+  redis:
+    image: redis
+    restart: always
+    volumes:
+      - /data
 
   database:
     image: postgres
@@ -20,7 +46,6 @@ services:
       POSTGRES_DB: ownphotos
       POSTGRES_USER: ownphotos
       POSTGRES_PASSWORD: ownphotos
-
-  memcached:
-    image: memcached
+    volumes:
+      - /var/lib/postgresql/data
 
