@@ -17,7 +17,6 @@ RUN apt-get update && \
 
 RUN apt-get install -y bzip2
 
-
 RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 RUN bash Miniconda3-latest-Linux-x86_64.sh -b -p /miniconda
 # RUN apt-get install libopenblas-dev liblapack-dev
@@ -89,6 +88,15 @@ ENV REDIS_PORT 11211
 
 # Timezone
 ENV TIME_ZONE UTC
+
+# Only keep resized photos in the internal library
+ENV FULLPHOTO_FIT false
+# Full photo target fit window dimensions
+ENV FULLPHOTO_WIDTH 2048
+ENV FULLPHOTO_HEIGHT 2048
+
+# Directory auto-scan interval
+ENV SCHEDULER_INTERVAL 300
 
 EXPOSE 80
 COPY . /code

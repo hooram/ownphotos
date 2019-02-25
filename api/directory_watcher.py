@@ -56,8 +56,8 @@ def handle_new_image(user, image_path):
                 photo.added_on = datetime.datetime.now().replace(
                     tzinfo=pytz.utc)
                 photo.geolocation_json = {}
-                photo.save()
                 photo._generate_md5()
+                photo.save()
 
                 start = datetime.datetime.now()
                 photo._generate_thumbnail()

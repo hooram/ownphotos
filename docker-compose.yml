@@ -63,6 +63,7 @@ services:
       - REDIS_HOST=ownphotos-redis
       - REDIS_PORT=6379
       - MAPBOX_API_KEY=CHANGE_MEAAAA
+      - FULLPHOTO_FIT=true
     links:
       - "ownphotos-db:ownphotos-db"
       - "ownphotos-redis:ownphotos-redis"
