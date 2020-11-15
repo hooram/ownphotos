@@ -57,7 +57,7 @@ https://discord.gg/dPCdTBN
 ## What does it use?
 
 - **Face detection:** [face_recognition](https://github.com/ageitgey/face_recognition) 
-- **Face classification/clusterization:** scikit-learn
+- **Face classification/clusterization:** [scikit-learn](https://github.com/scikit-learn/scikit-learn)
 - **Object detection:** [densecap](https://github.com/jcjohnson/densecap), [places365](http://places.csail.mit.edu/)
 - **Reverse geocoding:** [Mapbox](https://www.mapbox.com/): You need to have an API key. First 50,000 geocode lookups are free every month.
 
@@ -101,5 +101,5 @@ The basic idea is this:
   - Only the admin user can change the "scan directory" of the users, including the admin itself.
   - Normal users cannot change his/her own "scan directory"
   - Only the admin can find the page to control this under the "user icon (top right) - admin area"
-- For scannign photos that reside in external Nextcloud instances
+- For scanning photos that reside in external Nextcloud instances
   - Any user can change his/her own Nextcloud endpoint, and choose a top level directory in the Nextcloud account.
