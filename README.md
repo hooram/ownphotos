@@ -1,3 +1,11 @@
+# Ownphotos development has moved to [LibrePhotos](https://github.com/LibrePhotos/librephotos)
+Ownphotos development has moved to LibrePhotos
+Use it here: https://github.com/LibrePhotos/librephotos
+
+
+<br/><br/><br/>
+### OLD project for archive only, use LibrePhotos
+
 <div style="text-align:center"><img width="100" src ="/screenshots/logo.png"/></div>
 
 # Ownphotos
