@@ -109,5 +109,5 @@ The basic idea is this:
   - Only the admin user can change the "scan directory" of the users, including the admin itself.
   - Normal users cannot change his/her own "scan directory"
   - Only the admin can find the page to control this under the "user icon (top right) - admin area"
-- For scannign photos that reside in external Nextcloud instances
+- For scanning photos that reside in external Nextcloud instances
   - Any user can change his/her own Nextcloud endpoint, and choose a top level directory in the Nextcloud account.
