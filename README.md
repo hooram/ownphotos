@@ -85,14 +85,13 @@ outside. You must account for the corsaCross-Origin Resource Sharing (CORS) in y
 
 ## Docker-compose method (Recommended)
 
-```
-wget https://raw.githubusercontent.com/hooram/ownphotos/dev/docker-compose.yml.template
-cp docker-compose.yml.template docker-compose.yml
+```bash
+wget -O docker-compose.yml https://raw.githubusercontent.com/hooram/ownphotos/dev/docker-compose.yml.template
 ```
 
 Open `docker-compose.yml` in your favorite text editor and make changes in the lines with `# CHANGE ME`
 
-```
+```bash
 docker-compose up -d
 ```
 
