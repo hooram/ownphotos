@@ -38,7 +38,7 @@ Flask==1.0
 Flask-Cors==3.0.3
 Flask-RESTful==0.3.6
 geopy==1.11.0
-gunicorn==19.8.1
+gunicorn==20.0.2
 # idna==2.5
 ipdb==0.10.3
 ipython==6.1.0
