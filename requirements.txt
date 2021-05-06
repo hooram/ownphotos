@@ -35,7 +35,7 @@ ExifRead==2.1.2
 face-recognition==1.2.2
 face-recognition-models==0.3.0
 Flask==1.0
-Flask-Cors==3.0.3
+Flask-Cors==3.0.9
 Flask-RESTful==0.3.6
 geopy==1.11.0
 gunicorn==19.8.1
