@@ -69,7 +69,7 @@ ptyprocess==0.5.2
 pycocotools==2.0.0
 pycparser==2.19
 Pygments==2.2.0
-PyJWT==1.6.4
+PyJWT==2.4.0
 https://github.com/owncloud/pyocclient/archive/master.zip
 pyparsing==2.2.0
 python-dateutil==2.7.3
