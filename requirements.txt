@@ -99,5 +99,5 @@ wcwidth==0.1.7
 Werkzeug==0.15.3
 wrapt==1.10.11
 yarg==0.1.9
-joblib==0.13.2
+joblib==1.2.0
 gevent==1.4.0
